@@ -1,0 +1,46 @@
+import { Rook } from "./rook";
+import { Color, FENChar } from "./models";
+import { Pawn } from "./pawn";
+import { Knight } from "./knight";
+import { Bishop } from "./Bishop";
+import { Queen } from "./Queen"
+import { Piece } from "./piece"
+import { King } from "./king";
+
+
+export class ChessBoard{
+    private chessBoard:(Piece|null)[][];
+    private _playerColor = Color.White;
+
+    constructor(){
+        this.chessBoard = [
+            [
+                new Rook(Color.White), new Knight(Color.White), new Bishop(Color.White), new Queen(Color.White), 
+                new King(Color.White), new Bishop(Color.White), new Knight(Color.White), new Rook(Color.White)
+            ],
+            [
+                new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White)
+            ],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [
+                new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black)
+            ],
+            [
+                new Rook(Color.Black), new Knight(Color.Black), new Bishop(Color.Black), new King(Color.Black), 
+                new Queen(Color.Black), new Bishop(Color.Black), new Knight(Color.Black), new Rook(Color.Black)
+            ],
+        ]
+    }
+    public get playColor(): Color{
+        return this._playerColor;
+    }
+
+    public get chessBoardView(): (FENChar|null)[][]{
+        return this.chessBoard.map(row => {
+            return row.map(piece => piece instanceof Piece ? piece.FENChar : null);
+        })
+    }
+}
